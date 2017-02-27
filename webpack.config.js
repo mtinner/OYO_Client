@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const DEVELOPMEMNT = process.env.NODE_ENV === 'development';
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -29,14 +30,20 @@ module.exports = {
         hints: false
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.tsx?$/, 						  // All ts and tsx files will be process by
-                loaders: ['babel-loader', 'ts-loader'], // first babel-loader, then ts-loader
+                use: ['babel-loader', 'ts-loader'], // first babel-loader, then ts-loader
                 exclude: /node_modules/                   // ignore node_modules
             }, {
                 test: /\.jsx?$/,                          // all js and jsx files will be processed by
-                loader: 'babel-loader',                   // babel-loader
+                use: 'babel-loader',                   // babel-loader
+                exclude: /node_modules/                  // ignore node_modules
+            }, {
+                test: /\.css?$/,                          // all js and jsx files will be processed by
+                use: ExtractTextPlugin.extract({
+                    use: 'css-loader'
+                }),
                 exclude: /node_modules/                  // ignore node_modules
             }
         ]
@@ -54,6 +61,7 @@ module.exports = {
                 verbose: true
             }
         ),
+        new ExtractTextPlugin('styles.css'),
         // By default, webpack does `n=>n` compilation with entry files. This concatenates
         // them into a single chunk.
         new webpack.optimize.LimitChunkCountPlugin({

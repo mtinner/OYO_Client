@@ -1,6 +1,7 @@
 import {render, version} from 'inferno';
 import Component from 'inferno-component';
 import {Incrementer} from './components/Incrementer';
+import  './main.css';
 
 const container = document.getElementById('app');
 
