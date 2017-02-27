@@ -2,12 +2,22 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: [
-        './src/hot.js',
+const DEVELOPMEMNT = process.env.NODE_ENV === 'development';
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
+const entry = PRODUCTION ?
+    ['./src/index.tsx'] :
+    ['./src/hot.js',
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080'
-    ],
+    ];
+
+const plugins = PRODUCTION ? [] : [new webpack.HotModuleReplacementPlugin()];
+
+
+module.exports = {
+    devtool: 'source-map',
+    entry: entry,
     output: {
         path: __dirname + '/dist',
         filename: 'bundle.js'
@@ -32,7 +42,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        ...plugins,
         new HtmlWebpackPlugin(
             {
                 template: './src/index.html',
