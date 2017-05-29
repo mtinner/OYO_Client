@@ -24,7 +24,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.scss', '.js', '.jsx', '.ts', '.tsx']
     },
     performance: {
         hints: false
@@ -32,18 +32,19 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /oyo.scss?$/,                          // all js and jsx files will be processed by
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader', 'sass-loader']
+                }),
+                exclude: /node_modules/                  // ignore node_modules
+            },
+            {
                 test: /\.tsx?$/, 						  // All ts and tsx files will be process by
                 use: ['babel-loader', 'ts-loader'], // first babel-loader, then ts-loader
                 exclude: /node_modules/                   // ignore node_modules
             }, {
                 test: /\.jsx?$/,                          // all js and jsx files will be processed by
                 use: 'babel-loader',                   // babel-loader
-                exclude: /node_modules/                  // ignore node_modules
-            }, {
-                test: /\.css?$/,                          // all js and jsx files will be processed by
-                use: ExtractTextPlugin.extract({
-                    use: 'css-loader'
-                }),
                 exclude: /node_modules/                  // ignore node_modules
             }
         ]

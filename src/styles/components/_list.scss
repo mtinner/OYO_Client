@@ -1,0 +1,20 @@
+.list {
+  margin: 0 1rem;
+
+  & header {
+    color: $grey;
+    line-height: 48px;
+    font-size: 14px;
+  }
+
+  & ul {
+    margin: 0;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  & li {
+    height: 60px;
+    display: flex;
+  }
+}
