@@ -1,13 +1,13 @@
 .list {
   margin: 0 1rem;
 
-  & header {
+  & > header {
     color: $grey;
     line-height: 48px;
     font-size: 14px;
   }
 
-  & ul {
+  & > ul {
     margin: 0;
     list-style: none;
     padding-left: 0;
@@ -16,5 +16,10 @@
   & li {
     height: 60px;
     display: flex;
+    justify-items: center;
+    flex-direction: column;
+    & > small {
+      color: $grey;
+    }
   }
 }

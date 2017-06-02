@@ -23,4 +23,4 @@ class MyComponent extends Component<any, any> {
 	}
 }
 
-render(<MyComponent />, container || undefined);
+render(<MyComponent />, container);
