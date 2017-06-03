@@ -1,9 +1,13 @@
 import Component from 'inferno-component';
-import {TwoLineListItem} from './TwoLineListItem';
+import {TwoLineListItem, ITwoLineListItemProps} from './TwoLineListItem';
 
 interface Props {
 	title: string;
-	items: Array<any>;
+	items: Array<IListItemProps>;
+}
+
+export interface IListItemProps {
+	title: string;
 }
 
 export class List extends Component<Props, any> {
@@ -13,9 +17,10 @@ export class List extends Component<Props, any> {
 	}
 
 	render() {
-		const items = this.props.items.map(item => {
-			return <TwoLineListItem item={item}></TwoLineListItem>;
+		const items = this.props.items.map((item: ITwoLineListItemProps) => {
+			return <TwoLineListItem title={item.title} description={item.description}></TwoLineListItem>;
 		});
+
 
 		return (
 			<div className="list">

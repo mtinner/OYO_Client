@@ -8,6 +8,9 @@ var server = new WebpackDevServer(compiler, {
     filename: config.output.filename,
     stats: {
         colors: true
+    },
+    proxy: {
+        "**/api/**": 'http://localhost:8610'
     }
 });
 

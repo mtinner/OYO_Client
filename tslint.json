@@ -22,6 +22,7 @@
         "prefer-const": false,
         "quotemark": [ true, "single", "jsx-double" ],
         "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
-        "variable-name": false
+        "variable-name": false,
+        "arrow-parens": false
     }
 }

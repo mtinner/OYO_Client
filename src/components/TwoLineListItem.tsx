@@ -1,6 +1,11 @@
-export function TwoLineListItem(props) {
+import {IListItemProps} from './List';
+export interface ITwoLineListItemProps extends IListItemProps {
+	description: string;
+}
+
+export function TwoLineListItem(props: ITwoLineListItemProps) {
 	return <li>
-		<header>Title</header>
-		<small>detail</small>
+		<header>{props.title}</header>
+		<small>{props.description}</small>
 	</li>;
 }
