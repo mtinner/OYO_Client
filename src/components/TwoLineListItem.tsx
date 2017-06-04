@@ -1,11 +1,19 @@
-import {IListItemProps} from './List';
-export interface ITwoLineListItemProps extends IListItemProps {
-	description: string;
+import {ListItem, ListItemProps} from './ListItem';
+
+export class TwoLineListItemProps extends ListItemProps {
+	readonly tagName = TwoLineListItem;
+	public description: string;
 }
 
-export function TwoLineListItem(props: ITwoLineListItemProps) {
-	return <li>
-		<header>{props.title}</header>
-		<small>{props.description}</small>
-	</li>;
+export class TwoLineListItem extends ListItem {
+	constructor(props, context) {
+		super(props, context);
+	}
+
+	render() {
+		return <li>
+			<header>{this.props.content.title}</header>
+			<small>{this.props.content.description}</small>
+		</li>;
+	}
 }

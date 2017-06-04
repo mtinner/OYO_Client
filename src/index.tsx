@@ -3,7 +3,7 @@ import Component from 'inferno-component';
 import './styles/oyo.scss';
 import {List} from './components/List';
 import {EndpointService} from './services/EndpointService';
-import {ITwoLineListItemProps} from './components/TwoLineListItem';
+import {TwoLineListItemProps} from './components/TwoLineListItem';
 
 const container = document.getElementById('app');
 
@@ -14,46 +14,48 @@ class MyComponent extends Component<any, any> {
 		super(props, context);
 
 		this.state = {
-			newItems: new Array<ITwoLineListItemProps>(),
-			configuredItems: new Array<ITwoLineListItemProps>(),
-			unusedItems: new Array<ITwoLineListItemProps>()
+			newItems: new Array<TwoLineListItemProps>(),
+			configuredItems: new Array<TwoLineListItemProps>(),
+			unusedItems: new Array<TwoLineListItemProps>()
 		};
 	}
 
 	componentDidMount() {
-		let newItems = new Array<ITwoLineListItemProps>(),
-			configuredItems = new Array<ITwoLineListItemProps>(),
-			unusedItems = new Array<ITwoLineListItemProps>();
+		let newItems = new Array<TwoLineListItemProps>(),
+			configuredItems = new Array<TwoLineListItemProps>(),
+			unusedItems = new Array<TwoLineListItemProps>();
 		this.endpointService = new EndpointService();
 		this.endpointService.endpoints
 			.then(endpoints => endpoints
 				.forEach(endpoint => {
-					endpoint.ios
-						.forEach(io => {
-							if (io.title) {
-								configuredItems.push({
-									title: io.title,
-									description: `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`
-								});
-							}
-							else if (io.activated) {
-								newItems.push({
-									title: endpoint.chipId.toString(),
-									description: `InputPin ${io.inputPin}`
-								});
-							}
-							else {
-								unusedItems.push({
-									title: endpoint.chipId.toString(),
-									description: `InputPin ${io.inputPin}`
-								})
-							}
-						})
-				})
+						endpoint.ios
+							.forEach(io => {
+								let two = new TwoLineListItemProps();
+								if (io.title) {
+									two.title = io.title;
+									two.description = `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`;
+									configuredItems.push(two);
+								}
+								else if (io.activated) {
+									two.title = endpoint.chipId.toString();
+									two.description = `InputPin ${io.inputPin}`;
+									newItems.push(two);
+								}
+								else {
+									two.title = endpoint.chipId.toString();
+									two.description = `InputPin ${io.inputPin}`;
+									unusedItems.push(two);
+								}
+							})
+					}
+				)
 			)
 			.then(items => {
-				this.setState({newItems, unusedItems, configuredItems})
-			});
+					this
+						.setState({newItems, unusedItems, configuredItems})
+				}
+			)
+		;
 	}
 
 	render() {
