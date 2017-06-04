@@ -6,7 +6,9 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack -p",
     "lint": "tslint src/*.ts{,x} src/**/*.ts{,x}",
-    "start": "cross-env NODE_ENV=development node dev-server.js"
+    "start": "cross-env NODE_ENV=development node dev-server.js",
+    "publish": "cross-env NODE_ENV=production  webpack -p",
+    "postpublish": "node ./dist/server.bundle.js"
   },
   "keywords": [
     "inferno",
@@ -15,6 +17,10 @@
   "author": "Dominic Gannaway",
   "license": "MIT",
   "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.15.3",
+    "http": "0.0.0",
+    "http-proxy": "^1.16.2",
     "inferno": "^3.3.1",
     "inferno-component": "^3.3.1"
   },
