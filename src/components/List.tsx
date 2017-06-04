@@ -3,7 +3,7 @@ import {ListItemProps} from './ListItem';
 
 interface Props {
 	title: string;
-	items: Array<ListItemProps>;
+	items: ListItemProps[];
 }
 
 export class List extends Component<Props, any> {
@@ -13,10 +13,12 @@ export class List extends Component<Props, any> {
 	}
 
 	render() {
+		if (!this.props.items.length) {
+			return;
+		}
 		const items = this.props.items.map((item: ListItemProps) => {
 			return <item.tagName content={item}></item.tagName>;
 		});
-
 
 		return (
 			<div className="list">
