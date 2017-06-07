@@ -11,6 +11,9 @@ var server = new WebpackDevServer(compiler, {
     },
     proxy: {
         "**/api/**": 'http://localhost:8610'
+    },
+    historyApiFallback: {
+        index: 'index.html'
     }
 });
 

@@ -22,7 +22,8 @@
     "http": "0.0.0",
     "http-proxy": "^1.16.2",
     "inferno": "^3.3.1",
-    "inferno-component": "^3.3.1"
+    "inferno-component": "^3.3.1",
+    "inferno-router": "^3.3.1"
   },
   "devDependencies": {
     "@types/node": "^7.0.27",

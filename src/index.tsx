@@ -1,72 +1,22 @@
-import {render} from 'inferno';
-import Component from 'inferno-component';
+import Inferno from 'inferno';
+import {IndexRoute, Route, Router} from 'inferno-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 import './styles/oyo.scss';
-import {List} from './components/List';
-import {EndpointService} from './services/EndpointService';
-import {TwoLineListItemProps} from './components/TwoLineListItem';
+import {Configuration} from './pages/configuration';
+import {Settings} from './pages/settings';
 
-const container = document.getElementById('app');
+const browserHistory = createBrowserHistory();
 
-class MyComponent extends Component<any, any> {
-	private endpointService: EndpointService;
-
-	constructor(props, context) {
-		super(props, context);
-
-		this.state = {
-			newItems: new Array<TwoLineListItemProps>(),
-			configuredItems: new Array<TwoLineListItemProps>(),
-			unusedItems: new Array<TwoLineListItemProps>()
-		};
-	}
-
-	componentDidMount() {
-		let newItems = new Array<TwoLineListItemProps>(),
-			configuredItems = new Array<TwoLineListItemProps>(),
-			unusedItems = new Array<TwoLineListItemProps>();
-		this.endpointService = new EndpointService();
-		this.endpointService.endpoints
-			.then(endpoints => endpoints
-				.forEach(endpoint => {
-						endpoint.ios
-							.forEach(io => {
-								let two = new TwoLineListItemProps();
-								if (io.title) {
-									two.title = io.title;
-									two.description = `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`;
-									configuredItems.push(two);
-								}
-								else if (io.activated) {
-									two.title = endpoint.chipId.toString();
-									two.description = `InputPin ${io.inputPin}`;
-									newItems.push(two);
-								}
-								else {
-									two.title = endpoint.chipId.toString();
-									two.description = `InputPin ${io.inputPin}`;
-									unusedItems.push(two);
-								}
-							})
-					}
-				)
-			)
-			.then(items => {
-					this
-						.setState({newItems, unusedItems, configuredItems})
-				}
-			)
-		;
-	}
-
-	render() {
-		return (
-			<div>
-				<List title="New" items={this.state.newItems}/>
-				<List title="Configured" items={this.state.configuredItems}/>
-				<List title="Unused" items={this.state.unusedItems}/>
-			</div>
-		);
-	}
+function NoMatch() {
+	return <div>I am a no Match component</div>;
 }
 
-render(<MyComponent />, container);
+const routes = (
+	<Router history={ browserHistory }>
+		<IndexRoute component={ Settings }/>
+		<Route path="users" component={ Configuration }/>
+		<Route path="*" component={ NoMatch }/>
+	</Router>
+);
+
+Inferno.render(routes, document.getElementById('app'));
