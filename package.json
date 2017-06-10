@@ -1,7 +1,6 @@
 {
-  "name": "inferno-typescript-example",
+  "name": "OYO_Client",
   "version": "1.0.0",
-  "description": "A basic example of Inferno with TypeScript",
   "main": "./dist/oyo_client.bundle.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack -p",
@@ -46,5 +45,10 @@
     "typescript": "^2.2.2",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2"
-  }
+  },
+  "apps" : [{
+    "script" : "./dist/oyo_client.bundle.js",
+    "watch" : "false",
+    "name" : "OYO_Client"
+  }]
 }
