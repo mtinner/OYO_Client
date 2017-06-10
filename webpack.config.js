@@ -21,7 +21,7 @@ let clientConfig = {
     entry: entry,
     output: {
         path: __dirname + '/dist',
-        filename: '[name].bundle.js'
+        filename: 'oyo_[name].bundle.js'
     },
     resolve: {
         extensions: ['.scss', '.js', '.jsx', '.ts', '.tsx']
@@ -80,7 +80,7 @@ let serverConfig = {
     target: 'node',
     output: {
         path: __dirname + '/dist',
-        filename: 'server.bundle.js'
+        filename: 'oyo_client.bundle.js'
     },
     resolve: {
         extensions: ['.js', '.ts']

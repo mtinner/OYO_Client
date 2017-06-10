@@ -7,8 +7,7 @@
     "build": "cross-env NODE_ENV=production webpack -p",
     "lint": "tslint src/*.ts{,x} src/**/*.ts{,x}",
     "start": "cross-env NODE_ENV=development node dev-server.js",
-    "publish": "cross-env NODE_ENV=production  webpack -p",
-    "postpublish": "node ./dist/server.bundle.js"
+    "publish": "cross-env NODE_ENV=production  webpack -p"
   },
   "keywords": [
     "inferno",
