@@ -6,7 +6,8 @@
     "build": "cross-env NODE_ENV=production webpack -p",
     "lint": "tslint src/*.ts{,x} src/**/*.ts{,x}",
     "start": "cross-env NODE_ENV=development node dev-server.js",
-    "publish": "cross-env NODE_ENV=production  webpack -p"
+    "publish": "cross-env NODE_ENV=production  webpack -p",
+    "postpublish": "pm2 startOrRestart ./package.json"
   },
   "keywords": [
     "inferno",
@@ -46,9 +47,11 @@
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2"
   },
-  "apps" : [{
-    "script" : "./dist/oyo_client.bundle.js",
-    "watch" : "false",
-    "name" : "OYO_Client"
-  }]
+  "apps": [
+    {
+      "script": "./dist/oyo_client.bundle.js",
+      "watch": "false",
+      "name": "OYO_Client"
+    }
+  ]
 }
