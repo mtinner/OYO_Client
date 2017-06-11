@@ -1,0 +1,30 @@
+.inputfield {
+  position: relative;
+  font-size: 16px;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  padding: 20px 0;
+
+  & label {
+    bottom: 0;
+    color: inherit;
+    font-size: 16px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    position: absolute;
+    display: block;
+    top: 24px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    transition: top $slide-duration, font-size $slide-duration;
+  }
+
+  &--focus > label {
+    top: 0;
+    font-size: 12px;
+  }
+}

@@ -1,20 +1,23 @@
 import Component from 'inferno-component';
-
+import {Inputfield} from '../components/Inputfield';
 
 export class Configuration extends Component<any, any> {
-	//private endpointService = new EndpointService();
 
 	constructor(props, context) {
 		super(props, context);
-
-		this.state = {};
 	}
+
+	onInputfieldChange = (event) => {
+		console.log('chagne', event);
+	};
 
 	render() {
 		return (
 			<div>
-				asdfasdfasdf
+				<Inputfield title="Name" text="Küche"
+							onInputChange={this.onInputfieldChange}></Inputfield>
 			</div>
-		);
+		)
+			;
 	}
 }
