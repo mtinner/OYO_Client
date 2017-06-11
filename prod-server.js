@@ -23,6 +23,13 @@ const server = http.createServer(app);
 // and then proxy the request.
 function reverseProxy(req, res) {
     proxy.web(req, res, {target: 'http://localhost:8610/api'});
+    proxy.on('error', function (err, req, res) {
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Something went wrong. And we are reporting a custom error message.');
+    });
 }
 
 console.log("listening on port 8080");

@@ -49,7 +49,7 @@
   "apps": [
     {
       "script": "./dist/oyo_client.bundle.js",
-      "watch": "false",
+      "watch": "true",
       "name": "OYO_Client"
     }
   ]
