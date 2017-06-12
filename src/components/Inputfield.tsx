@@ -10,7 +10,7 @@ export class Inputfield extends Component<any, any> {
 	}
 
 	set focused(value: boolean) {
-		//this.setState({focused: value || !!this.props.text});
+		this.setState({focused: value || !!this.props.text});
 	}
 
 	text = (event) => {
@@ -23,9 +23,13 @@ export class Inputfield extends Component<any, any> {
 				<input type="text"
 					   onBlur={() => this.focused = false }
 					   onFocus={() => this.focused = true }
-					   onChange={       this.props.onInputChange }
-					   value={this.props.text}></input>
+					   value={this.props.text}
+					   onChange={this.props.onInputChange }>
+				</input>
+				<div className="subline"></div>
+
 				<label>{this.props.title}</label>
+				{this.state.text}
 			</div>
 		);
 	}

@@ -7,8 +7,8 @@
   padding: 20px 0;
 
   & label {
+    color: $grey;
     bottom: 0;
-    color: inherit;
     font-size: 16px;
     left: 0;
     right: 0;
@@ -23,8 +23,43 @@
     transition: top $slide-duration, font-size $slide-duration;
   }
 
-  &--focus > label {
-    top: 0;
-    font-size: 12px;
+  &--focus {
+
+    & > label {
+      top: 0;
+      font-size: 12px;
+    }
+  }
+
+  & .subline {
+    border-bottom: 2px solid currentColor;
+    bottom: 20px;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transition: left $slide-duration, right $slide-duration;
+  }
+
+  & input {
+    border: none;
+    border-bottom: 1px solid $grey;
+    font-size: 16px;
+    font-family: "Helvetica", "Arial", sans-serif;
+    padding: 4px 0;
+    width: 100%;
+    &:focus {
+      outline: none;
+
+      & ~ {
+        & .subline {
+          left: 0;
+          right: 0;
+        }
+
+        & label {
+          color: inherit;
+        }
+      }
+    }
   }
 }
