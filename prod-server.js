@@ -11,7 +11,7 @@ var http = require('http'),
 app.use(compression());
 var proxy = httpProxy.createProxyServer({});
 app.use('/api', reverseProxy);
-const root = __dirname + '/dist';
+const root = __dirname;
 app.use(express.static(root));
 app.use(fallback('index.html', {root: root}));
 
