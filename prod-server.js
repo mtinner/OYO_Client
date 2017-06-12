@@ -2,6 +2,7 @@ var http = require('http'),
     httpProxy = require('http-proxy'),
     express = require('express'),
     compression = require('compression'),
+    fallback = require('express-history-api-fallback'),
     app = express();
 
 //
@@ -10,7 +11,9 @@ var http = require('http'),
 app.use(compression());
 var proxy = httpProxy.createProxyServer({});
 app.use('/api', reverseProxy);
-app.use('/', express.static(__dirname + '/'));
+const root = __dirname + '/dist';
+app.use(express.static(root));
+app.use(fallback('index.html', {root: root}));
 
 
 //

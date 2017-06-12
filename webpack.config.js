@@ -102,7 +102,7 @@ let serverConfig = {
         })
     ]
 };
-if(PRODUCTION){
+if (PRODUCTION) {
     module.exports = [clientConfig, serverConfig];
 }
 else {

@@ -17,6 +17,7 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "^4.15.3",
+    "express-history-api-fallback": "^2.2.1",
     "http": "0.0.0",
     "http-proxy": "^1.16.2",
     "inferno": "^3.3.1",
