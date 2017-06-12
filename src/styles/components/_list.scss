@@ -7,7 +7,7 @@
     font-size: 14px;
   }
 
-  & > ul {
+  & ul {
     margin: 0;
     list-style: none;
     padding-left: 0;
@@ -16,13 +16,22 @@
   & li {
     height: 60px;
     display: flex;
-    justify-items: center;
-    flex-direction: column;
-    & > small {
+    align-items: center;
+    & > * {
+      display: flex;
+      justify-items: center;
+      flex-direction: column;
+    }
+
+    & small {
       color: $grey;
     }
   }
   &:not(:last-of-type) {
     border-bottom: 0.5px solid $grey;
   }
+}
+
+.list-imitate {
+  margin: 0 1rem;
 }

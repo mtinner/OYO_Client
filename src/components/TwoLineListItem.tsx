@@ -12,8 +12,10 @@ export class TwoLineListItem extends ListItem {
 
 	render() {
 		return <li>
-			<header>{this.props.content.title}</header>
-			<small>{this.props.content.description}</small>
+			<div>
+				<header>{this.props.content.title}</header>
+				<small>{this.props.content.description}</small>
+			</div>
 		</li>;
 	}
 }

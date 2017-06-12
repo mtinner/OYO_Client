@@ -45,7 +45,7 @@ export class Settings extends Component<any, any> {
 			)
 			.then(items => {
 					this
-						.setState({newItems, unusedItems, configuredItems})
+						.setState({newItems, unusedItems, configuredItems});
 				}
 			)
 		;
