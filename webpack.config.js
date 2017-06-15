@@ -14,7 +14,15 @@ const entry = PRODUCTION ?
         'webpack-dev-server/client?http://localhost:8080'
     ];
 
-const plugins = PRODUCTION ? [] : [new webpack.HotModuleReplacementPlugin()];
+const plugins = PRODUCTION ?
+    [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ] :
+    [new webpack.HotModuleReplacementPlugin()];
 
 let clientConfig = {
     devtool: PRODUCTION ? '' : 'source-map',
