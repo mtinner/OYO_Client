@@ -8,16 +8,12 @@ interface Props {
 
 export class List extends Component<Props, any> {
 
-	constructor(props, context) {
-		super(props, context);
-	}
-
 	render() {
 		if (!this.props.items.length) {
 			return;
 		}
 		const items = this.props.items.map((item: ListItemProps) => {
-			return <item.tagName content={item}></item.tagName>;
+			return <item.tagName {...item}></item.tagName>;
 		});
 
 		return (

@@ -4,8 +4,11 @@ import {List} from '../components/List';
 import {ListItemProps} from '../components/ListItem';
 import {CheckControlListItemProps, SwitchControlListItemProps} from '../components/ControlListItem';
 import {TwoLineListItemProps} from '../components/TwoLineListItem';
+import {EndpointService} from '../services/EndpointService';
+import {IEndpoint} from '../common/IEndpoint';
 
 export class Configuration extends Component<any, any> {
+	private endpointService = new EndpointService();
 
 	constructor(props, context) {
 		super(props, context);
@@ -16,16 +19,37 @@ export class Configuration extends Component<any, any> {
 	}
 
 	componentWillMount() {
+		this.endpointService.getEndpoint(this.props.params.chipid)
+			.then((endpoint: IEndpoint) => {
+				let io = endpoint.ios.find(tuple => tuple.inputPin === parseInt(this.props.params.inputpin, 0));
+				if (!io) {
+					return;
+				}
+				let switchItem = new SwitchControlListItemProps();
+				switchItem.title = 'Toggle input';
+				let activatedItem = new CheckControlListItemProps();
+				activatedItem.title = 'Activated';
+				let chipIdItem = new TwoLineListItemProps();
+				chipIdItem.title = 'ChipId';
+				chipIdItem.description = endpoint.chipId;
+				let inputpinItem = new TwoLineListItemProps();
+				inputpinItem.title = 'Inputpin';
+				inputpinItem.description = io.inputPin;
+				let listItems = [switchItem, activatedItem, chipIdItem, inputpinItem];
+
+				this.setState({listItems});
+			});
+
 		let switchItem = new SwitchControlListItemProps();
 		switchItem.title = 'Toggle input';
 		let activatedItem = new CheckControlListItemProps();
 		activatedItem.title = 'Activated';
 		let chipIdItem = new TwoLineListItemProps();
 		chipIdItem.title = 'ChipId';
-		chipIdItem.description = 'id';
+		chipIdItem.description = 'unknown';
 		let inputpinItem = new TwoLineListItemProps();
 		inputpinItem.title = 'Inputpin';
-		inputpinItem.description = 'pinid';
+		inputpinItem.description = 'unknown';
 		let listItems = [switchItem, activatedItem, chipIdItem, inputpinItem];
 
 		this.setState({listItems});
@@ -45,7 +69,7 @@ export class Configuration extends Component<any, any> {
 					<Inputfield className="inputfield--list" title="Name" text={this.state.title}
 								onInputChange={this.onInputfieldChange}></Inputfield>
 				</div>
-				<List items={this.state.listItems}/>
+				<List title="" items={this.state.listItems}/>
 			</div>
 		);
 	}

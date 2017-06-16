@@ -2,20 +2,17 @@ import {ListItem, ListItemProps} from './ListItem';
 
 export class TwoLineListItemProps extends ListItemProps {
 	readonly tagName = TwoLineListItem;
-	public description: string;
+	public description: string | number;
 }
 
 export class TwoLineListItem extends ListItem {
-	constructor(props, context) {
-		super(props, context);
-	}
 
 	render() {
-		return <li>
+		return super.render(
 			<div>
-				<header>{this.props.content.title}</header>
-				<small>{this.props.content.description}</small>
+				<header>{this.props.title}</header>
+				<small>{this.props.description}</small>
 			</div>
-		</li>;
+		);
 	}
 }

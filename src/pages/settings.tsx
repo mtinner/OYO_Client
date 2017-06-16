@@ -1,8 +1,8 @@
 import Component from 'inferno-component';
 import {EndpointService} from '../services/EndpointService';
 import {TwoLineListItemProps} from '../components/TwoLineListItem';
+import {ListItemProps} from '../components/ListItem';
 import {List} from '../components/List';
-
 
 export class Settings extends Component<any, any> {
 	private endpointService = new EndpointService();
@@ -20,12 +20,16 @@ export class Settings extends Component<any, any> {
 		let newItems = new Array<TwoLineListItemProps>(),
 			configuredItems = new Array<TwoLineListItemProps>(),
 			unusedItems = new Array<TwoLineListItemProps>();
-		this.endpointService.endpoints
+		this.endpointService.getEndpoints()
 			.then(endpoints => endpoints
 				.forEach(endpoint => {
 						endpoint.ios
 							.forEach(io => {
 								let two = new TwoLineListItemProps();
+								two.route = `/configuration/${endpoint.chipId}/${io.inputPin}`;
+								two.onClick = (props: ListItemProps) => {
+									console.log(props);
+								};
 								if (io.title) {
 									two.title = io.title;
 									two.description = `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`;
@@ -44,8 +48,7 @@ export class Settings extends Component<any, any> {
 				)
 			)
 			.then(items => {
-					this
-						.setState({newItems, unusedItems, configuredItems});
+					this.setState({newItems, unusedItems, configuredItems});
 				}
 			)
 		;

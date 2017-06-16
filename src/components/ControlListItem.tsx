@@ -19,10 +19,11 @@ export class CheckControlListItemProps extends ControlListItemProps {
 }
 
 export class ControlListItem extends ListItem {
+
 	render() {
 		return (<li>
-			<header>{this.props.content.title}</header>
-			<this.props.content.controlItem></this.props.content.controlItem>
+			<header>{this.props.title}</header>
+			<this.props.controlItem></this.props.controlItem>
 		</li>);
 	}
 }

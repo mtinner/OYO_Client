@@ -7,7 +7,8 @@ import './styles/oyo.scss';
 
 const browserHistory = createBrowserHistory();
 
-function NoMatch() {
+function NoMatch({params}) {
+	debugger;
 	return <div>I am a no Match component</div>;
 }
 
@@ -15,7 +16,7 @@ const routes = (
 	<Router history={ browserHistory }>
 		<IndexRoute component={ Settings }/>
 		<Route path="configuration" component={ Settings }/>
-		<Route path="/configuration/:chipid/:pin" component={ Configuration }/>
+		<Route path="/configuration/:chipid/:inputpin" component={ Configuration }/>
 		<Route path="*" component={ NoMatch }/>
 	</Router>
 );
