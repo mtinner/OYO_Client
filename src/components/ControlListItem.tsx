@@ -3,18 +3,15 @@ import {Switch} from './Switch';
 import {Checkbox} from './Checkbox';
 
 abstract class ControlListItemProps extends ListItemProps {
+	readonly tagName = ControlListItem;
 	abstract readonly controlItem;
 }
 
 export class SwitchControlListItemProps extends ControlListItemProps {
-	readonly tagName = ControlListItem;
-	readonly state;
 	readonly controlItem = Switch;
 }
 
 export class CheckControlListItemProps extends ControlListItemProps {
-	readonly tagName = ControlListItem;
-	readonly state;
 	readonly controlItem = Checkbox;
 }
 
