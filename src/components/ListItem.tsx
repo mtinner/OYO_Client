@@ -7,15 +7,13 @@ export abstract class ListItemProps {
 	title: string;
 	onClick = (props: ListItemProps) => {
 	};
-	route?: string;
 }
 
 export abstract class ListItem extends Component<Props, any> {
 
 	render(content) {
-		return <li href={this.props.route} onClick={() => {
+		return <li onClick={() => {
 			this.props.onClick(this.props);
-			this.props.route && (window.location.href = this.props.route);
 		}}>
 			{content}
 			<Link to={this.props.router}/>

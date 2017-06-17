@@ -26,11 +26,10 @@ export class Settings extends Component<any, any> {
 						endpoint.ios
 							.forEach(io => {
 								let two = new TwoLineListItemProps();
-								two.route = `/configuration/${endpoint.chipId}/${io.inputPin}`;
 								two.onClick = (props: ListItemProps) => {
-									console.log(props);
+									window.location.href = `/configuration/${endpoint.chipId}/${io.inputPin}`;
 								};
-								if (io.title) {
+								if (io.activated && io.title) {
 									two.title = io.title;
 									two.description = `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`;
 									configuredItems.push(two);
@@ -39,7 +38,7 @@ export class Settings extends Component<any, any> {
 									two.description = `InputPin ${io.inputPin}`;
 									newItems.push(two);
 								} else {
-									two.title = endpoint.chipId.toString();
+									two.title = io.title || endpoint.chipId.toString();
 									two.description = `InputPin ${io.inputPin}`;
 									unusedItems.push(two);
 								}
@@ -58,7 +57,7 @@ export class Settings extends Component<any, any> {
 		return (
 			<div>
 				<List title="New" items={this.state.newItems}/>
-				<List title="Configured" items={this.state.configuredItems}/>
+				<List title="Activated" items={this.state.configuredItems}/>
 				<List title="Unused" items={this.state.unusedItems}/>
 			</div>
 		);

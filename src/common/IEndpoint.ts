@@ -20,7 +20,7 @@ export class IO {
 	inputPin: number;
 	outputPin: number;
 	inputLevel: number;
-	toggleInput: boolean;
+	toggleOutput: boolean;
 	activated: boolean;
 
 	static update(oldIO, newIO) {

@@ -26,10 +26,10 @@ export class Configuration extends Component<any, any> {
 					return;
 				}
 				let switchItem = new SwitchControlListItemProps();
-				switchItem.title = 'Toggle input';
-				switchItem.checked = io.toggleInput;
+				switchItem.title = 'Toggle Output';
+				switchItem.checked = io.toggleOutput;
 				switchItem.onChange = (value) => {
-					this.updateEnpoint({toggleInput: value});
+					this.updateEnpoint({toggleOutput: value});
 				};
 				let activatedItem = new SwitchControlListItemProps();
 				activatedItem.title = 'Activated';
@@ -49,7 +49,7 @@ export class Configuration extends Component<any, any> {
 			});
 
 		let switchItem = new SwitchControlListItemProps();
-		switchItem.title = 'Toggle input';
+		switchItem.title = 'Toggle Output';
 		let activatedItem = new SwitchControlListItemProps();
 		activatedItem.title = 'Activated';
 		let chipIdItem = new TwoLineListItemProps();
