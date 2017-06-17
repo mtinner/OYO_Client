@@ -8,6 +8,6 @@ export class Checkbox extends Component<Props, any> {
 	}
 
 	render() {
-		return <input type="checkbox"></input>;
+		return <input type="checkbox" checked={this.props.checked}></input>;
 	}
 }

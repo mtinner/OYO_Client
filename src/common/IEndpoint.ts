@@ -1,14 +1,28 @@
-export interface IEndpoint {
+export class Endpoint {
 	chipId: number;
 	ip: string;
-	ios: IIO[];
+	ios: IO[];
 	active: boolean;
+
+	static updateIO(endpoint: Endpoint, inputPin: number, updatedIO: {}) {
+		return endpoint.ios.map((io: IO) => {
+			if (io.inputPin === inputPin) {
+				return IO.update(io, updatedIO);
+			}
+			return io;
+		});
+	}
+
 }
 
-export interface IIO {
+export class IO {
 	title: string;
 	inputPin: number;
 	outputPin: number;
 	inputLevel: number;
 	activated: boolean;
+
+	static update(oldIO, newIO) {
+		return {...oldIO, ...newIO};
+	}
 }

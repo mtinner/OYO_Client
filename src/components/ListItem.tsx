@@ -5,7 +5,8 @@ import {Link} from 'inferno-router';
 export abstract class ListItemProps {
 	abstract readonly tagName: typeof ListItem;
 	title: string;
-	onClick: (props: ListItemProps) => void;
+	onClick = (props: ListItemProps) => {
+	};
 	route?: string;
 }
 

@@ -2,10 +2,10 @@ import Component from 'inferno-component';
 import {Inputfield} from '../components/Inputfield';
 import {List} from '../components/List';
 import {ListItemProps} from '../components/ListItem';
-import {CheckControlListItemProps, SwitchControlListItemProps} from '../components/ControlListItem';
+import {SwitchControlListItemProps} from '../components/ControlListItem';
 import {TwoLineListItemProps} from '../components/TwoLineListItem';
 import {EndpointService} from '../services/EndpointService';
-import {IEndpoint} from '../common/IEndpoint';
+import {Endpoint} from '../common/IEndpoint';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
@@ -13,22 +13,23 @@ export class Configuration extends Component<any, any> {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			title: 'Küche',
+			title: 'Unnamed',
 			listItems: new Array<ListItemProps>()
 		};
 	}
 
 	componentWillMount() {
 		this.endpointService.getEndpoint(this.props.params.chipid)
-			.then((endpoint: IEndpoint) => {
+			.then((endpoint: Endpoint) => {
 				let io = endpoint.ios.find(tuple => tuple.inputPin === parseInt(this.props.params.inputpin, 0));
 				if (!io) {
 					return;
 				}
 				let switchItem = new SwitchControlListItemProps();
 				switchItem.title = 'Toggle input';
-				let activatedItem = new CheckControlListItemProps();
+				let activatedItem = new SwitchControlListItemProps();
 				activatedItem.title = 'Activated';
+				activatedItem.checked = io.activated;
 				let chipIdItem = new TwoLineListItemProps();
 				chipIdItem.title = 'ChipId';
 				chipIdItem.description = endpoint.chipId;
@@ -37,12 +38,12 @@ export class Configuration extends Component<any, any> {
 				inputpinItem.description = io.inputPin;
 				let listItems = [switchItem, activatedItem, chipIdItem, inputpinItem];
 
-				this.setState({listItems});
+				this.setState({listItems, title: io.title || 'Unnamed', endpoint});
 			});
 
 		let switchItem = new SwitchControlListItemProps();
 		switchItem.title = 'Toggle input';
-		let activatedItem = new CheckControlListItemProps();
+		let activatedItem = new SwitchControlListItemProps();
 		activatedItem.title = 'Activated';
 		let chipIdItem = new TwoLineListItemProps();
 		chipIdItem.title = 'ChipId';
@@ -57,6 +58,8 @@ export class Configuration extends Component<any, any> {
 
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
+			this.state.endpoint.ios = Endpoint.updateIO(this.state.endpoint, parseInt(this.props.params.inputpin, 0), {title: event.target.value});
+			this.endpointService.updateEndpoint(this.state.endpoint);
 			this.setState({title: event.target.value});
 		}
 	};

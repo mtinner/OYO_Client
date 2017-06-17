@@ -5,6 +5,7 @@ import {Checkbox} from './Checkbox';
 abstract class ControlListItemProps extends ListItemProps {
 	readonly tagName = ControlListItem;
 	abstract readonly controlItem;
+	checked: boolean;
 }
 
 export class SwitchControlListItemProps extends ControlListItemProps {
@@ -20,7 +21,7 @@ export class ControlListItem extends ListItem {
 	render() {
 		return (<li>
 			<header>{this.props.title}</header>
-			<this.props.controlItem></this.props.controlItem>
+			<this.props.controlItem {...this.props}></this.props.controlItem>
 		</li>);
 	}
 }
