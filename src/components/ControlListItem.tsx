@@ -6,6 +6,8 @@ abstract class ControlListItemProps extends ListItemProps {
 	readonly tagName = ControlListItem;
 	abstract readonly controlItem;
 	checked: boolean;
+	onChange = (value: any) => {
+	};
 }
 
 export class SwitchControlListItemProps extends ControlListItemProps {
@@ -21,7 +23,12 @@ export class ControlListItem extends ListItem {
 	render() {
 		return (<li>
 			<header>{this.props.title}</header>
-			<this.props.controlItem {...this.props}></this.props.controlItem>
+			<this.props.controlItem
+				{...this.props}
+				onChange={(event) =>
+					this.props.onChange(event.target.checked)
+				}>
+			</this.props.controlItem>
 		</li>);
 	}
 }

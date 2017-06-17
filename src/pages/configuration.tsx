@@ -27,9 +27,16 @@ export class Configuration extends Component<any, any> {
 				}
 				let switchItem = new SwitchControlListItemProps();
 				switchItem.title = 'Toggle input';
+				switchItem.checked = io.toggleInput;
+				switchItem.onChange = (value) => {
+					this.updateEnpoint({toggleInput: value});
+				};
 				let activatedItem = new SwitchControlListItemProps();
 				activatedItem.title = 'Activated';
 				activatedItem.checked = io.activated;
+				activatedItem.onChange = (value) => {
+					this.updateEnpoint({activated: value});
+				};
 				let chipIdItem = new TwoLineListItemProps();
 				chipIdItem.title = 'ChipId';
 				chipIdItem.description = endpoint.chipId;
@@ -58,11 +65,15 @@ export class Configuration extends Component<any, any> {
 
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
-			this.state.endpoint.ios = Endpoint.updateIO(this.state.endpoint, parseInt(this.props.params.inputpin, 0), {title: event.target.value});
-			this.endpointService.updateEndpoint(this.state.endpoint);
-			this.setState({title: event.target.value});
+			this.updateEnpoint({title: event.target.value});
 		}
 	};
+
+	updateEnpoint(newObjectValues) {
+		this.state.endpoint.ios = Endpoint.updateIO(this.state.endpoint, parseInt(this.props.params.inputpin, 0), newObjectValues);
+		this.endpointService.updateEndpoint(this.state.endpoint);
+		// this.setState({title: event.target.value});
+	}
 
 	render() {
 		return (
