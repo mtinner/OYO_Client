@@ -22,35 +22,30 @@ export class Settings extends Component<any, any> {
 			unusedItems = new Array<TwoLineListItemProps>();
 		this.endpointService.getEndpoints()
 			.then(endpoints => endpoints
-				.forEach(endpoint => {
-						endpoint.ios
 							.forEach(io => {
 								let two = new TwoLineListItemProps();
 								two.onClick = (props: ListItemProps) => {
-									window.location.href = `/configuration/${endpoint.chipId}/${io.inputPin}`;
+									window.location.href = `/configuration/${io.id}`;
 								};
 								if (io.activated && io.title) {
 									two.title = io.title;
-									two.description = `Node ${endpoint.chipId.toString()}, Pin ${io.inputPin}`;
+									two.description = `Node ${io.chipId.toString()}, Pin ${io.inputPin}`;
 									configuredItems.push(two);
 								} else if (io.activated) {
-									two.title = endpoint.chipId.toString();
+									two.title = io.chipId.toString();
 									two.description = `InputPin ${io.inputPin}`;
 									newItems.push(two);
 								} else {
-									two.title = io.title || endpoint.chipId.toString();
+									two.title = io.title || io.chipId.toString();
 									two.description = `InputPin ${io.inputPin}`;
 									unusedItems.push(two);
 								}
-							});
-					}
-				)
+							})
 			)
 			.then(items => {
-					this.setState({newItems, unusedItems, configuredItems});
+					this.setState({ newItems, unusedItems, configuredItems });
 				}
-			)
-		;
+			);
 	}
 
 	render() {

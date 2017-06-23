@@ -16,7 +16,7 @@ const routes = (
 	<Router history={ browserHistory }>
 		<IndexRoute component={ Settings }/>
 		<Route path="configuration" component={ Settings }/>
-		<Route path="/configuration/:chipid/:inputpin" component={ Configuration }/>
+		<Route path="/configuration/:id" component={ Configuration }/>
 		<Route path="*" component={ NoMatch }/>
 	</Router>
 );

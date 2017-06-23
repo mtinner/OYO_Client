@@ -1,16 +1,12 @@
-import {BaseService} from './BaseService';
-import {Endpoint} from '../common/IEndpoint';
+import { BaseService } from './BaseService';
+import { IIO } from '../common/IIO';
 export class EndpointService extends BaseService {
 
-	getEndpoints(): Promise<[Endpoint]> {
-		return this.get(`${this.baseApi}endpoints`);
+	getEndpoints(params: object = {}): Promise<[IIO]> {
+		return this.get(`${this.baseApi}endpoints${this.objectToParam(params)}`);
 	}
 
-	getEndpoint(chipId: number): Promise<Endpoint> {
-		return this.get(`${this.baseApi}endpoints/${chipId}`);
-	}
-
-	updateEndpoint(endpoint: Endpoint): Promise<Endpoint> {
-		return this.post(`${this.baseApi}endpoints/${endpoint.chipId}`, endpoint);
+	updateEndpoint(io: IIO): Promise<IIO> {
+		return this.put(`${this.baseApi}endpoints/${io.id}`, io);
 	}
 }
