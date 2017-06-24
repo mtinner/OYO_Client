@@ -2,7 +2,7 @@ import {ListItem, ListItemProps} from './ListItem';
 import {Switch} from './Switch';
 import {Checkbox} from './Checkbox';
 
-abstract class ControlListItemProps extends ListItemProps {
+export abstract class ControlListItemProps extends ListItemProps {
 	readonly tagName = ControlListItem;
 	abstract readonly controlItem;
 	checked: boolean;

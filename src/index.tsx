@@ -4,6 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import {Settings} from './pages/settings';
 import {Configuration} from './pages/configuration';
 import './styles/oyo.scss';
+import {Control} from './pages/control';
 
 const browserHistory = createBrowserHistory();
 
@@ -14,7 +15,8 @@ function NoMatch({params}) {
 
 const routes = (
 	<Router history={ browserHistory }>
-		<IndexRoute component={ Settings }/>
+		<IndexRoute component={ Control }/>
+		<Route path="control" component={ Control }/>
 		<Route path="configuration" component={ Settings }/>
 		<Route path="/configuration/:id" component={ Configuration }/>
 		<Route path="*" component={ NoMatch }/>
