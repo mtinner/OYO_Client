@@ -14,6 +14,10 @@ var server = new WebpackDevServer(compiler, {
     },
     historyApiFallback: {
         index: 'index.html'
+    },
+    watchOptions: {
+        ignored: '/_icons/',
+        aggregateTimeout: 6000
     }
 });
 

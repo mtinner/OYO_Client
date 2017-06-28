@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WebfontPlugin = require('webpack-webfont').default;
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -54,7 +55,12 @@ let clientConfig = {
                 test: /\.jsx?$/,                          // all js and jsx files will be processed by
                 use: 'babel-loader',                   // babel-loader
                 exclude: /node_modules/                  // ignore node_modules
-            }
+            },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)?$/,
+                loader: 'url-loader',
+                exclude: /node_modules/                  // ignore node_modules
+            },
         ]
     },
     plugins: [
@@ -70,6 +76,18 @@ let clientConfig = {
                 verbose: true
             }
         ),
+        new WebfontPlugin({
+            files: './src/assets/icons/*.svg',
+            fontName: '_icons',
+            css: true,
+            //template: 'scss',
+            cssTemplateFontPath: './fonts/',
+            types: 'eot,woff,ttf',
+            dest: {
+                fontsDir: './src/styles/fonts',
+                stylesDir: './src/styles'
+            }
+        }),
         new ExtractTextPlugin('styles.css'),
         // By default, webpack does `n=>n` compilation with entry files. This concatenates
         // them into a single chunk.
@@ -110,7 +128,7 @@ let serverConfig = {
         })
     ]
 };
-if (PRODUCTION) {
+if(PRODUCTION) {
     module.exports = [clientConfig, serverConfig];
 }
 else {
