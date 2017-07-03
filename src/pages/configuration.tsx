@@ -21,7 +21,7 @@ export class Configuration extends Component<any, any> {
 	componentWillMount() {
 		this.endpointService.getEndpoints({ id: this.props.params.id })
 			.then((ios: [IIO]) => {
-				this.setState(ios[0]);
+				this.setState({...this.state, io: ios[0]});
 			});
 	}
 
