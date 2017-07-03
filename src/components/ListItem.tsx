@@ -12,7 +12,7 @@ export class ListItem extends Component<Props, any> {
 
 	render() {
 		return <li onClick={() => {
-			this.props.onClick(this.props);
+			this.props.onClick && this.props.onClick(this.props);
 		}}>
 			{this.props.children}
 			<Link to={this.props.router}/>

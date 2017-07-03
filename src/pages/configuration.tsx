@@ -21,21 +21,18 @@ export class Configuration extends Component<any, any> {
 	componentWillMount() {
 		this.endpointService.getEndpoints({ id: this.props.params.id })
 			.then((ios: [IIO]) => {
-				this.setState({...this.state, io: ios[0], title: ios[0].title});
+				this.setState({ ...this.state, io: ios[0], title: ios[0].title });
 			});
 	}
 
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
-			this.setState(
-				{ ...this.state, title: event.target.value },
-				() => this.updateEnpoint({ title: event.target.value })
-			);
+			this.setState({ ...this.state, title: event.target.value });
 		}
 	}
 
 	updateEnpoint(newObjectValues) {
-		this.endpointService.updateEndpoint(this.state.io)
+		this.endpointService.updateEndpoint({ ...this.state.io, ...newObjectValues })
 			.then((io: IIO) => {
 				this.setState({ ...this.state, io });
 			});
@@ -46,25 +43,24 @@ export class Configuration extends Component<any, any> {
 			return [];
 		}
 
-		let switchItem = <ListItem><Switch checked={io.toggleOutput} /></ListItem>;
-		switchItem.title = 'Toggle Output';
-		switchItem.onChange = (value) => {
+		const onChangeSwitch = (value) => {
 			this.updateEnpoint({ toggleOutput: value });
 		};
+		let switchItem = <ListItem><Switch checked={io.toggleOutput} onToggle={onChangeSwitch} /></ListItem>;
+		switchItem.title = 'Toggle Output';
 
-		let activatedItem = <ListItem><Switch checked={io.activated} /></ListItem>;
-		activatedItem.title = 'Activated';
-		activatedItem.onChange = (value) => {
+		const onChangeSwitchTwo = (value) => {
 			this.updateEnpoint({ activated: value });
 		};
 
-		let chipIdItem = <ListItem><TwoLineListItem title = "ChipId" description={io.chipId} /></ListItem>;
+		let activatedItem = <ListItem><Switch checked={io.activated} onToggle={onChangeSwitchTwo} /></ListItem>;
+		activatedItem.title = 'Activated';
+
+		let chipIdItem = <ListItem><TwoLineListItem title="ChipId" description={io.chipId} /></ListItem>;
 
 		let inputpinItem = <ListItem><TwoLineListItem title="Inputpin" description={io.inputPin} /></ListItem>;
 
-		// this.setState({ title: io.title || 'Unnamed', io });
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
-		// return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
 
 	render() {

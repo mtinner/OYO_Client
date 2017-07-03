@@ -12,9 +12,6 @@ export class List extends Component<Props, any> {
 		if (!this.props.items.length) {
 			return;
 		}
-		// const items = this.props.items.map((item: ListItemProps) => {
-		// 	return <div {...item}></div>;
-		// });
 
 		return (
 			<div className="list">

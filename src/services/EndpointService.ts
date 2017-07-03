@@ -10,6 +10,8 @@ export class EndpointService extends BaseService {
 	}
 
 	updateEndpoint(io: IIO): Promise<any> {
-		return Promise.resolve(this.DATA_ENDPOINT);
+		console.log('Updating via Service:');
+		console.log(io);
+		return Promise.resolve(io);
 	}
 }
