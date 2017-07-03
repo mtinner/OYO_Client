@@ -9,9 +9,11 @@ export class TwoLineListItemProps extends ListItemProps {
 export class TwoLineListItem extends Component<any, any> {
 
 	render() {
-		return <div>
+		return <li>
+			<div>
 				<header>{this.props.title}</header>
 				<small>{this.props.description}</small>
-			</div>;
+			</div>
+		</li>;
 	}
 }

@@ -1,6 +1,6 @@
 import Component from 'inferno-component';
-import {Props} from 'inferno';
-import {Link} from 'inferno-router';
+import { Props } from 'inferno';
+import { Link } from 'inferno-router';
 
 export abstract class ListItemProps {
 	title: string;
@@ -14,8 +14,9 @@ export class ListItem extends Component<Props, any> {
 		return <li onClick={() => {
 			this.props.onClick && this.props.onClick(this.props);
 		}}>
+			<header>{this.props.title}</header>
 			{this.props.children}
-			<Link to={this.props.router}/>
+			<Link to={this.props.router} />
 		</li>;
 	}
 }

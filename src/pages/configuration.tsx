@@ -51,26 +51,26 @@ export class Configuration extends Component<any, any> {
 		const onChangeSwitch = (value) => {
 			this.updateIo({ toggleOutput: value });
 		};
-		let switchItem = <ListItem><Switch checked={this.state.toggleOutput} onToggle={onChangeSwitch} /></ListItem>;
-		switchItem.title = 'Toggle Output';
+		let switchItem = <ListItem title="Toggle Output">
+			<Switch checked={this.state.toggleOutput} onToggle={onChangeSwitch} />
+		</ListItem>;
 
 		const onChangeSwitchTwo = (value) => {
 			this.updateIo({ activated: value });
 		};
+		let activatedItem = <ListItem title="Activated">
+			<Switch checked={this.state.activated} onToggle={onChangeSwitchTwo} />
+		</ListItem>;
 
-		let activatedItem = <ListItem><Switch checked={this.state.activated} onToggle={onChangeSwitchTwo} /></ListItem>;
-		activatedItem.title = 'Activated';
+		let chipIdItem = <TwoLineListItem title="ChipId" description={this.state.chipId} />;
 
-		let chipIdItem = <ListItem><TwoLineListItem title="ChipId" description={this.state.chipId} /></ListItem>;
-
-		let inputpinItem = <ListItem><TwoLineListItem title="Inputpin" description={this.state.inputPin} /></ListItem>;
+		let inputpinItem = <TwoLineListItem title="Inputpin" description={this.state.inputPin} />;
 
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
 
 	render() {
 		return (
-
 			<div className="configuration">
 				<div className="list-imitate">
 					<Inputfield
