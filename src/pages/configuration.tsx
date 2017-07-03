@@ -13,52 +13,57 @@ export class Configuration extends Component<any, any> {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			title: 'Unnamed',
-			io: []
+			title: 'Unnamed'
 		};
 	}
 
 	componentWillMount() {
 		this.endpointService.getEndpoints({ id: this.props.params.id })
 			.then((ios: [IIO]) => {
-				this.setState({ ...this.state, io: ios[0], title: ios[0].title });
+				this.setState(ios[0]);
 			});
 	}
 
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
-			this.setState({ ...this.state, title: event.target.value });
+			this.setState(
+				{ ...this.state, title: event.target.value },
+				() => this.endpointService.updateEndpoint(this.state)
+					.then((io: IIO) => {
+						this.setState(io);
+					})
+			);
 		}
 	}
 
-	updateEnpoint(newObjectValues) {
-		this.endpointService.updateEndpoint({ ...this.state.io, ...newObjectValues })
+	updateIo(update) {
+		this.endpointService.updateEndpoint({ ...this.state, ...update })
 			.then((io: IIO) => {
-				this.setState({ ...this.state, io });
+				this.setState(io);
 			});
 	}
 
-	renderListItems(io = this.state.io): ListItem[] {
-		if (!io) {
+	renderListItems(): ListItem[] {
+		if (!this.state) {
 			return [];
 		}
 
 		const onChangeSwitch = (value) => {
-			this.updateEnpoint({ toggleOutput: value });
+			this.updateIo({ toggleOutput: value });
 		};
-		let switchItem = <ListItem><Switch checked={io.toggleOutput} onToggle={onChangeSwitch} /></ListItem>;
+		let switchItem = <ListItem><Switch checked={this.state.toggleOutput} onToggle={onChangeSwitch} /></ListItem>;
 		switchItem.title = 'Toggle Output';
 
 		const onChangeSwitchTwo = (value) => {
-			this.updateEnpoint({ activated: value });
+			this.updateIo({ activated: value });
 		};
 
-		let activatedItem = <ListItem><Switch checked={io.activated} onToggle={onChangeSwitchTwo} /></ListItem>;
+		let activatedItem = <ListItem><Switch checked={this.state.activated} onToggle={onChangeSwitchTwo} /></ListItem>;
 		activatedItem.title = 'Activated';
 
-		let chipIdItem = <ListItem><TwoLineListItem title="ChipId" description={io.chipId} /></ListItem>;
+		let chipIdItem = <ListItem><TwoLineListItem title="ChipId" description={this.state.chipId} /></ListItem>;
 
-		let inputpinItem = <ListItem><TwoLineListItem title="Inputpin" description={io.inputPin} /></ListItem>;
+		let inputpinItem = <ListItem><TwoLineListItem title="Inputpin" description={this.state.inputPin} /></ListItem>;
 
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
