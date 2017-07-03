@@ -5,6 +5,7 @@ import { TwoLineListItem } from '../components/TwoLineListItem';
 import { EndpointService } from '../services/EndpointService';
 import { IIO } from '../common/IIO';
 import { Switch } from '../components/Switch';
+import { ListItem } from '../components/ListItem';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
@@ -40,35 +41,30 @@ export class Configuration extends Component<any, any> {
 			});
 	}
 
-	renderListItems(io = this.state.io): Array<Component<any, any>> {
+	renderListItems(io = this.state.io): ListItem[] {
 		if (!io) {
 			return [];
 		}
 
-		let switchItem = <Switch />;
+		let switchItem = <ListItem><Switch checked={io.toggleOutput} /></ListItem>;
 		switchItem.title = 'Toggle Output';
-		switchItem.checked = io.toggleOutput;
 		switchItem.onChange = (value) => {
 			this.updateEnpoint({ toggleOutput: value });
 		};
 
-		let activatedItem = <Switch />;
+		let activatedItem = <ListItem><Switch checked={io.activated} /></ListItem>;
 		activatedItem.title = 'Activated';
-		activatedItem.checked = io.activated;
 		activatedItem.onChange = (value) => {
 			this.updateEnpoint({ activated: value });
 		};
 
-		let chipIdItem = <TwoLineListItem />;
-		chipIdItem.title = 'ChipId';
-		chipIdItem.description = io.chipId;
+		let chipIdItem = <ListItem><TwoLineListItem title = "ChipId" description={io.chipId} /></ListItem>;
 
-		let inputpinItem = <TwoLineListItem />;
-		inputpinItem.title = 'Inputpin';
-		inputpinItem.description = io.inputPin;
+		let inputpinItem = <ListItem><TwoLineListItem title="Inputpin" description={io.inputPin} /></ListItem>;
 
 		// this.setState({ title: io.title || 'Unnamed', io });
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
+		// return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
 
 	render() {

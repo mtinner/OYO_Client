@@ -1,18 +1,17 @@
-import {ListItem, ListItemProps} from './ListItem';
+import Component from 'inferno-component';
+import { ListItemProps } from './ListItem';
 
 export class TwoLineListItemProps extends ListItemProps {
 	readonly tagName = TwoLineListItem;
 	public description: string | number;
 }
 
-export class TwoLineListItem extends ListItem {
+export class TwoLineListItem extends Component<any, any> {
 
 	render() {
-		return super.render(
-			<div>
+		return <div>
 				<header>{this.props.title}</header>
 				<small>{this.props.description}</small>
-			</div>
-		);
+			</div>;
 	}
 }
