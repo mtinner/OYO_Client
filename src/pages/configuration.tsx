@@ -1,11 +1,10 @@
 import Component from 'inferno-component';
 import { Inputfield } from '../components/Inputfield';
 import { List } from '../components/List';
-import { ListItemProps } from '../components/ListItem';
-import { SwitchControlListItemProps } from '../components/ControlListItem';
-import { TwoLineListItemProps } from '../components/TwoLineListItem';
+import { TwoLineListItem } from '../components/TwoLineListItem';
 import { EndpointService } from '../services/EndpointService';
 import { IIO } from '../common/IIO';
+import { Switch } from '../components/Switch';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
@@ -14,71 +13,62 @@ export class Configuration extends Component<any, any> {
 		super(props, context);
 		this.state = {
 			title: 'Unnamed',
-			listItems: new Array<ListItemProps>()
+			io: []
 		};
 	}
 
 	componentWillMount() {
 		this.endpointService.getEndpoints({ id: this.props.params.id })
 			.then((ios: [IIO]) => {
-				this.updateView(ios[0]);
+				this.setState(ios[0]);
 			});
-
-		let switchItem = new SwitchControlListItemProps();
-		switchItem.title = 'Toggle Output';
-		let activatedItem = new SwitchControlListItemProps();
-		activatedItem.title = 'Activated';
-		let chipIdItem = new TwoLineListItemProps();
-		chipIdItem.title = 'ChipId';
-		chipIdItem.description = 'unknown';
-		let inputpinItem = new TwoLineListItemProps();
-		inputpinItem.title = 'Inputpin';
-		inputpinItem.description = 'unknown';
-		let listItems = [switchItem, activatedItem, chipIdItem, inputpinItem];
-
-		this.setState({ listItems });
 	}
 
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
-			this.state = { ...this.state, ...{ title: event.target.value } };
-			this.updateEnpoint({ title: event.target.value });
+			this.setState(
+				{ ...this.state, title: event.target.value },
+				() => this.updateEnpoint({ title: event.target.value })
+			);
 		}
-	};
+	}
 
 	updateEnpoint(newObjectValues) {
-		this.state.io = { ...this.state.io, ...newObjectValues };
 		this.endpointService.updateEndpoint(this.state.io)
 			.then((io: IIO) => {
-				this.updateView(io);
+				this.setState({ ...this.state, io });
 			});
 	}
 
-	updateView(io) {
+	renderListItems(io = this.state.io): Array<Component<any, any>> {
 		if (!io) {
-			return;
+			return [];
 		}
-		let switchItem = new SwitchControlListItemProps();
+
+		let switchItem = <Switch />;
 		switchItem.title = 'Toggle Output';
 		switchItem.checked = io.toggleOutput;
 		switchItem.onChange = (value) => {
 			this.updateEnpoint({ toggleOutput: value });
 		};
-		let activatedItem = new SwitchControlListItemProps();
+
+		let activatedItem = <Switch />;
 		activatedItem.title = 'Activated';
 		activatedItem.checked = io.activated;
 		activatedItem.onChange = (value) => {
 			this.updateEnpoint({ activated: value });
 		};
-		let chipIdItem = new TwoLineListItemProps();
+
+		let chipIdItem = <TwoLineListItem />;
 		chipIdItem.title = 'ChipId';
 		chipIdItem.description = io.chipId;
-		let inputpinItem = new TwoLineListItemProps();
+
+		let inputpinItem = <TwoLineListItem />;
 		inputpinItem.title = 'Inputpin';
 		inputpinItem.description = io.inputPin;
-		let listItems = [switchItem, activatedItem, chipIdItem, inputpinItem];
 
-		this.setState({ listItems, title: io.title || 'Unnamed', io });
+		// this.setState({ title: io.title || 'Unnamed', io });
+		return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
 
 	render() {
@@ -86,10 +76,13 @@ export class Configuration extends Component<any, any> {
 
 			<div className="configuration">
 				<div className="list-imitate">
-					<Inputfield className="inputfield--list" title="Name" text={this.state.title}
-					            onInputChange={this.onInputfieldChange}></Inputfield>
+					<Inputfield
+						className="inputfield--list"
+						title="Name" text={this.state.title}
+						onInputChange={this.onInputfieldChange}
+					></Inputfield>
 				</div>
-				<List title="" items={this.state.listItems}/>
+				<List title={this.state.title} items={this.renderListItems()} />
 			</div>
 		);
 	}

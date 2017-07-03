@@ -1,20 +1,17 @@
 import Component from 'inferno-component';
-import {ListItemProps} from './ListItem';
+// import {ListItem} from './ListItem';
 
 interface Props {
 	title: string;
-	items: ListItemProps[];
+	items: Component<any, any>[];
 }
 
 export class List extends Component<Props, any> {
 
 	render() {
-		if (!this.props.items.length) {
-			return;
-		}
-		const items = this.props.items.map((item: ListItemProps) => {
-			return <item.tagName {...item}></item.tagName>;
-		});
+		const items = this.props.items.map((item: Component<any, any>) => { 
+      return <li>{item}</li>; 
+    }); 
 
 		return (
 			<div className="list">
