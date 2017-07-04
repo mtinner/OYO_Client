@@ -7,8 +7,6 @@ export class EndpointService extends BaseService {
 	}
 
 	updateEndpoint(io: IIO): Promise<IIO> {
-		console.log('Updating via Service:');
-		console.log(io);
 		return this.put(`${this.baseApi}endpoints/${io.id}`, io);
 	}
 }
