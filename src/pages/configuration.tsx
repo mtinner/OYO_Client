@@ -1,24 +1,18 @@
 import Component from 'inferno-component';
-import { Inputfield } from '../components/Inputfield';
-import { List } from '../components/List';
-import { TwoLineListItem } from '../components/TwoLineListItem';
-import { EndpointService } from '../services/EndpointService';
-import { IIO } from '../common/IIO';
-import { Switch } from '../components/Switch';
-import { ListItem } from '../components/ListItem';
+import {Inputfield} from '../components/Inputfield';
+import {List} from '../components/List';
+import {TwoLineListItem} from '../components/TwoLineListItem';
+import {EndpointService} from '../services/EndpointService';
+import {IIO} from '../common/IIO';
+import {ListItem, ListItemProps} from '../components/ListItem';
+import {SwitchListItem} from '../components/SwitchListItem';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
 
-	constructor(props, context) {
-		super(props, context);
-		this.state = {
-			title: 'Unnamed'
-		};
-	}
-
 	componentWillMount() {
-		this.endpointService.getEndpoints({ id: this.props.params.id })
+		this.setState({title: 'Unnamed'});
+		this.endpointService.getEndpoints({id: this.props.params.id})
 			.then((ios: [IIO]) => {
 				this.setState(ios[0]);
 			});
@@ -27,7 +21,7 @@ export class Configuration extends Component<any, any> {
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
 			this.setState(
-				{ ...this.state, title: event.target.value },
+				{...this.state, title: event.target.value},
 				() => this.endpointService.updateEndpoint(this.state)
 					.then((io: IIO) => {
 						this.setState(io);
@@ -37,34 +31,28 @@ export class Configuration extends Component<any, any> {
 	}
 
 	updateIo(update) {
-		this.endpointService.updateEndpoint({ ...this.state, ...update })
+		this.endpointService.updateEndpoint({...this.state, ...update})
 			.then((io: IIO) => {
 				this.setState(io);
 			});
 	}
 
-	renderListItems(): ListItem[] {
+	renderListItems(): Array<ListItem<ListItemProps>> {
 		if (!this.state) {
 			return [];
 		}
 
-		const onChangeSwitch = (value) => {
-			this.updateIo({ toggleOutput: value });
-		};
-		let switchItem = <ListItem title="Toggle Output">
-			<Switch checked={this.state.toggleOutput} onToggle={onChangeSwitch} />
-		</ListItem>;
+		let switchItem = <SwitchListItem title="Toggle Output" checked={this.state.toggleOutput}
+										 onChange={value => this.updateIo({toggleOutput: value})}>
+		</SwitchListItem>;
 
-		const onChangeSwitchTwo = (value) => {
-			this.updateIo({ activated: value });
-		};
-		let activatedItem = <ListItem title="Activated">
-			<Switch checked={this.state.activated} onToggle={onChangeSwitchTwo} />
-		</ListItem>;
+		let activatedItem = <SwitchListItem title="Activated" checked={this.state.activated}
+											onChange={value => this.updateIo({activated: value})}>
+		</SwitchListItem>;
 
-		let chipIdItem = <TwoLineListItem title="ChipId" description={this.state.chipId} />;
+		let chipIdItem = <TwoLineListItem title="ChipId" description={this.state.chipId}/>;
 
-		let inputpinItem = <TwoLineListItem title="Inputpin" description={this.state.inputPin} />;
+		let inputpinItem = <TwoLineListItem title="Inputpin" description={this.state.inputPin}/>;
 
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
@@ -79,7 +67,7 @@ export class Configuration extends Component<any, any> {
 						onInputChange={this.onInputfieldChange}
 					></Inputfield>
 				</div>
-				<List title={this.state.title} items={this.renderListItems()} />
+				<List items={this.renderListItems()}/>
 			</div>
 		);
 	}
