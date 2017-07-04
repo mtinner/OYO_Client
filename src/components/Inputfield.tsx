@@ -1,11 +1,9 @@
 import Component from 'inferno-component';
 
-
 export class Inputfield extends Component<any, any> {
 
-	constructor(props, context) {
-		super(props, context);
-		this.state = {focused: !!this.props.text};
+	componentWillMount() {
+		this.setState({focused: !!this.props.text});
 		this.props.onInputChange();
 	}
 
@@ -28,7 +26,7 @@ export class Inputfield extends Component<any, any> {
 				</input>
 				<div className="subline"></div>
 
-				<label>{this.props.title}</label>
+				<label>{this.props.title || ''}</label>
 				{this.state.text}
 			</div>
 		);
