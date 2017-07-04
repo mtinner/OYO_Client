@@ -11,7 +11,7 @@ export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
 
 	componentWillMount() {
-		this.setState({title: 'Unnamed'});
+		this.setState({title: ''});
 		this.endpointService.getEndpoints({id: this.props.params.id})
 			.then((ios: [IIO]) => {
 				this.setState(ios[0]);
