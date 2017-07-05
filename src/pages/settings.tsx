@@ -1,59 +1,62 @@
 import Component from 'inferno-component';
-import {EndpointService} from '../services/EndpointService';
-import {TwoLineListItemProps} from '../components/TwoLineListItem';
-import {ListItemProps} from '../components/ListItem';
 import {List} from '../components/List';
+import {EndpointService} from '../services/EndpointService';
+import {TwoLineListItem} from '../components/TwoLineListItem';
 
 export class Settings extends Component<any, any> {
 	private endpointService = new EndpointService();
 
-	constructor(props, context) {
-		super(props, context);
-		this.state = {
-			newItems: new Array<TwoLineListItemProps>(),
-			configuredItems: new Array<TwoLineListItemProps>(),
-			unusedItems: new Array<TwoLineListItemProps>()
+	componentWillMount() {
+		this.setState({endpoints: []}, () =>
+			this.endpointService.getEndpoints()
+				.then((endpoints) => this.setState({endpoints})));
+	}
+
+	onClick = (id) => {
+		return () => {
+			window.location.href = `/configuration/${id}`;
 		};
 	}
 
-	componentDidMount() {
-		let newItems = new Array<TwoLineListItemProps>(),
-			configuredItems = new Array<TwoLineListItemProps>(),
-			unusedItems = new Array<TwoLineListItemProps>();
-		this.endpointService.getEndpoints()
-			.then(endpoints => endpoints
-							.forEach(io => {
-								let two = new TwoLineListItemProps();
-								two.onClick = (props: ListItemProps) => {
-									window.location.href = `/configuration/${io.id}`;
-								};
-								if (io.activated && io.title) {
-									two.title = io.title;
-									two.description = `Node ${io.chipId.toString()}, Pin ${io.inputPin}`;
-									configuredItems.push(two);
-								} else if (io.activated) {
-									two.title = io.chipId.toString();
-									two.description = `InputPin ${io.inputPin}`;
-									newItems.push(two);
-								} else {
-									two.title = io.title || io.chipId.toString();
-									two.description = `InputPin ${io.inputPin}`;
-									unusedItems.push(two);
-								}
-							})
-			)
-			.then(items => {
-					this.setState({ newItems, unusedItems, configuredItems });
-				}
-			);
+	renderNewListItems() {
+		if (!this.state.endpoints.length) {
+			return [];
+		} else {
+			return this.state.endpoints.filter(io => io.activated && !io.title)
+				.map(io => <TwoLineListItem title={`Node ${io.chipId.toString()}`}
+											description={`InputPin ${io.inputPin}`}
+											onClick={this.onClick(io.id)}/>);
+		}
+	}
+
+	renderActivatedListItems() {
+		if (!this.state.endpoints.length) {
+			return [];
+		} else {
+			return this.state.endpoints.filter(io => io.activated && io.title)
+				.map(io => <TwoLineListItem title={io.title}
+											description={`Node ${io.chipId.toString()}, Pin ${io.inputPin}`}
+											onClick={this.onClick(io.id)}/>);
+		}
+	}
+
+	renderUnusedListItems() {
+		if (!this.state.endpoints.length) {
+			return [];
+		} else {
+			return this.state.endpoints.filter(io => !io.activated)
+				.map(io => <TwoLineListItem title={io.title || `Node ${io.chipId.toString()}`}
+											description={`InputPin ${io.inputPin}`}
+											onClick={this.onClick(io.id)}/>);
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				<List title="New" items={this.state.newItems}/>
-				<List title="Activated" items={this.state.configuredItems}/>
-				<List title="Unused" items={this.state.unusedItems}/>
+				<List title="New" items={this.renderNewListItems()}/>
+				<List title="Activated" items={this.renderActivatedListItems()}/>
+				<List title="Unused" items={this.renderUnusedListItems()}/>
 			</div>
 		);
 	}

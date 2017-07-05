@@ -12,14 +12,11 @@ export class List extends Component<Props, any> {
 		if (!this.props.items.length) {
 			return;
 		}
-		const items = this.props.items.map((item: ListItemProps) => {
-			return <item.tagName {...item}></item.tagName>;
-		});
 
 		return (
 			<div className="list">
 				<header>{this.props.title}</header>
-				<ul>{items}</ul>
+				<ul>{this.props.items}</ul>
 			</div>
 		);
 	}

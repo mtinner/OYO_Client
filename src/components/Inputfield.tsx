@@ -1,16 +1,13 @@
 import Component from 'inferno-component';
 
-
 export class Inputfield extends Component<any, any> {
 
-	constructor(props, context) {
-		super(props, context);
-		this.state = {focused: !!this.props.text};
-		this.props.onInputChange();
+	componentWillMount() {
+		this.focused = false;
 	}
 
 	set focused(value: boolean) {
-		this.setState({focused: value || !!this.props.text});
+		this.setState({focused: value});
 	}
 
 	text = (event) => {
@@ -19,7 +16,7 @@ export class Inputfield extends Component<any, any> {
 
 	render() {
 		return (
-			<div className={'inputfield ' + (this.state.focused ? 'inputfield--focus' : '') }>
+			<div className={'inputfield ' + (this.state.focused || !!this.props.text ? 'inputfield--focus' : '') }>
 				<input type="text"
 					   onBlur={() => this.focused = false }
 					   onFocus={() => this.focused = true }
@@ -28,7 +25,7 @@ export class Inputfield extends Component<any, any> {
 				</input>
 				<div className="subline"></div>
 
-				<label>{this.props.title}</label>
+				<label>{this.props.title || ''}</label>
 				{this.state.text}
 			</div>
 		);

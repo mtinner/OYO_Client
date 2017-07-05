@@ -1,16 +1,15 @@
-import Component from 'inferno-component';
-import {Props} from 'inferno';
-
-export class Switch extends Component<Props, any> {
-
-	render() {
-		return (
-			<div className="switch">
-				<input onChange={this.props.onChange} type="checkbox" checked={this.props.checked}></input>
-				<div className="bar">
-					<div className="thumb"></div>
-				</div>
+export function Switch(props) {
+	return (
+		<div className="switch">
+			<input
+				onChange={() => {
+					props.onToggle && props.onToggle(!props.checked);
+				}}
+				type="checkbox" checked={props.checked}>
+			</input>
+			<div className="bar">
+				<div className="thumb"></div>
 			</div>
-		);
-	}
+		</div>
+	);
 }

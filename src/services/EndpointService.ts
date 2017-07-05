@@ -1,5 +1,5 @@
-import { BaseService } from './BaseService';
-import { IIO } from '../common/IIO';
+import {BaseService} from './BaseService';
+import {IIO} from '../common/IIO';
 export class EndpointService extends BaseService {
 
 	getEndpoints(params: object = {}): Promise<[IIO]> {
