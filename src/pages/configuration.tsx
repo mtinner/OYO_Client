@@ -28,7 +28,7 @@ export class Configuration extends Component<any, any> {
 					})
 			);
 		}
-	}
+	};
 
 	updateIo(update) {
 		this.endpointService.updateEndpoint({...this.state, ...update})

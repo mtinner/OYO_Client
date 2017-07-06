@@ -37,6 +37,7 @@ let clientConfig = {
     performance: {
         hints: false
     },
+    watch: false,
     module: {
         rules: [
             {
@@ -54,7 +55,12 @@ let clientConfig = {
                 test: /\.jsx?$/,                          // all js and jsx files will be processed by
                 use: 'babel-loader',                   // babel-loader
                 exclude: /node_modules/                  // ignore node_modules
-            }
+            },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)?$/,
+                loader: 'file-loader?name=[name].[ext]',
+                exclude: /node_modules/                  // ignore node_modules
+            },
         ]
     },
     plugins: [
@@ -110,7 +116,7 @@ let serverConfig = {
         })
     ]
 };
-if (PRODUCTION) {
+if(PRODUCTION) {
     module.exports = [clientConfig, serverConfig];
 }
 else {
