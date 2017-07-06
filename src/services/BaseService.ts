@@ -1,33 +1,23 @@
 export abstract class BaseService {
 	protected readonly baseApi = '/api/';
 
-	toJson(response: Response): Promise<object> {
+	toJson<T>(response: Response): Promise<T> {
 		return Promise.resolve(response.json());
 	}
 
-	get(api) {
+	get<T>(api) {
 		return fetch(api)
-			.then(this.toJson);
+			.then(res => this.toJson<T>(res));
 	}
 
-/*	post(api, body) {
-		return fetch(api, {
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: {
-				'Content-type': 'application/json'
-			}
-		}).then(this.toJson);
-	}
-	*/
-	put(api, body) {
+	put<T>(api, body) {
 		return fetch(api, {
 			method: 'PUT',
 			body: JSON.stringify(body),
 			headers: {
 				'Content-type': 'application/json'
 			}
-		}).then(this.toJson);
+		}).then(res => this.toJson<T>(res));
 	}
 
 	objectToParam(obj): string {

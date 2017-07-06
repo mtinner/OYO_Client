@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebfontPlugin = require('webpack-webfont').default;
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -38,6 +37,7 @@ let clientConfig = {
     performance: {
         hints: false
     },
+    watch: false,
     module: {
         rules: [
             {
@@ -58,7 +58,7 @@ let clientConfig = {
             },
             {
                 test: /\.(svg|eot|ttf|woff|woff2)?$/,
-                loader: 'url-loader',
+                loader: 'file-loader?name=[name].[ext]',
                 exclude: /node_modules/                  // ignore node_modules
             },
         ]
@@ -76,18 +76,6 @@ let clientConfig = {
                 verbose: true
             }
         ),
-        new WebfontPlugin({
-            files: './src/assets/icons/*.svg',
-            fontName: '_icons',
-            css: true,
-            //template: 'scss',
-            cssTemplateFontPath: './fonts/',
-            types: 'eot,woff,ttf',
-            dest: {
-                fontsDir: './src/styles/fonts',
-                stylesDir: './src/styles'
-            }
-        }),
         new ExtractTextPlugin('styles.css'),
         // By default, webpack does `n=>n` compilation with entry files. This concatenates
         // them into a single chunk.

@@ -1,5 +1,6 @@
 dist
-_icons.*
+**/styles/_iconfont.scss
+Iconfont.*
 _site
 .history
 .git
