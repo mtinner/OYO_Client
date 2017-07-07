@@ -1,0 +1,17 @@
+.navbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 24px;
+
+  i {
+    min-width: 24px;
+    cursor: pointer;
+  }
+
+  .title {
+    margin-left: 20px;
+  }
+}
