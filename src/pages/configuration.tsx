@@ -1,19 +1,20 @@
 import Component from 'inferno-component';
-import { Inputfield } from '../components/Inputfield';
-import { List } from '../components/List';
-import { TwoLineListItem } from '../components/TwoLineListItem';
-import { EndpointService } from '../services/EndpointService';
-import { IIO } from '../common/IIO';
-import { ListItem, ListItemProps } from '../components/ListItem';
-import { SwitchListItem } from '../components/SwitchListItem';
-import { ICONS, Navbar } from '../components/Navbar';
+import {Inputfield} from '../components/Inputfield';
+import {List} from '../components/List';
+import {TwoLineListItem} from '../components/TwoLineListItem';
+import {EndpointService} from '../services/EndpointService';
+import {IIO} from '../common/IIO';
+import {ListItem, ListItemProps} from '../components/ListItem';
+import {SwitchListItem} from '../components/SwitchListItem';
+import {ICONS, Navbar} from '../components/Navbar';
+import {navigateToOverview} from '../common/navigation';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
 
 	componentWillMount() {
-		this.setState({ title: '' });
-		this.endpointService.getEndpoints({ id: this.props.params.id })
+		this.setState({title: ''});
+		this.endpointService.getEndpoints({id: this.props.params.id})
 			.then((ios: [IIO]) => {
 				this.setState(ios[0]);
 			});
@@ -22,7 +23,7 @@ export class Configuration extends Component<any, any> {
 	onInputfieldChange = (event) => {
 		if (event && event.target) {
 			this.setState(
-				{ ...this.state, title: event.target.value },
+				{...this.state, title: event.target.value},
 				() => this.endpointService.updateEndpoint(this.state)
 					.then((io: IIO) => {
 						this.setState(io);
@@ -32,7 +33,7 @@ export class Configuration extends Component<any, any> {
 	};
 
 	updateIo(update) {
-		this.endpointService.updateEndpoint({ ...this.state, ...update })
+		this.endpointService.updateEndpoint({...this.state, ...update})
 			.then((io: IIO) => {
 				this.setState(io);
 			});
@@ -44,11 +45,11 @@ export class Configuration extends Component<any, any> {
 		}
 
 		let switchItem = <SwitchListItem title="Toggle Output" checked={this.state.toggleOutput}
-		                                 onChange={value => this.updateIo({ toggleOutput: value })}>
+										 onChange={value => this.updateIo({toggleOutput: value})}>
 		</SwitchListItem>;
 
 		let activatedItem = <SwitchListItem title="Activated" checked={this.state.activated}
-		                                    onChange={value => this.updateIo({ activated: value })}>
+											onChange={value => this.updateIo({activated: value})}>
 		</SwitchListItem>;
 
 		let chipIdItem = <TwoLineListItem title="ChipId" description={this.state.chipId}/>;
@@ -58,14 +59,11 @@ export class Configuration extends Component<any, any> {
 		return [switchItem, activatedItem, chipIdItem, inputpinItem];
 	}
 
-	navigateToOverview() {
-		window.location.href = '/configuration';
-	}
-
 	render() {
 		return (
 			<div className="configuration">
-				<Navbar iconLeft={ICONS.Arrow_Left} onClickIconLeft={this.navigateToOverview}></Navbar>
+				<Navbar iconLeft={ICONS.Arrow_Left} onClickIconLeft={navigateToOverview}
+						title="Configuration"></Navbar>
 				<div className="list-imitate">
 					<Inputfield
 						className="inputfield--list"
@@ -75,6 +73,7 @@ export class Configuration extends Component<any, any> {
 				</div>
 				<List items={this.renderListItems()}/>
 			</div>
-		);
+		)
+			;
 	}
 }

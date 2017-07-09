@@ -20,7 +20,7 @@ export class Navbar extends Component<NavbarProps, any> {
 		return (
 			<header className="navbar">
 				<i className={this.props.iconLeft} onClick={this.onLeftIconClick}></i>
-				<span className="title">Title</span>
+				<span className="title">{this.props.title}</span>
 			</header>
 		);
 	}

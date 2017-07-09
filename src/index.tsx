@@ -9,7 +9,6 @@ import {Control} from './pages/control';
 const browserHistory = createBrowserHistory();
 
 function NoMatch({params}) {
-	debugger;
 	return <div>I am a no Match component</div>;
 }
 
