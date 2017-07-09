@@ -7,7 +7,8 @@ interface NavbarProps {
 }
 
 export enum ICONS {
-	Arrow_Left = 'icon-arrow-back'
+	Arrow_Left = 'icon-arrow-back',
+	Menu = 'icon-menu'
 }
 
 export class Navbar extends Component<NavbarProps, any> {
