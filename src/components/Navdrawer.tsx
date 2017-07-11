@@ -1,44 +1,46 @@
+import Component from 'inferno-component';
+import { ICONS, Navbar } from './Navbar';
 interface NavdrawerProps {
-	isShown: boolean;
-	onClickBackdrop: (value) => void;
+	title: string;
 }
 
-export function Navdrawer(props: NavdrawerProps) {
-	function onBackdropClick(value: boolean) {
-		props.onClickBackdrop && props.onClickBackdrop(value);
+export class Navdrawer extends Component<NavdrawerProps, any> {
+
+	componentWillMount() {
+		this.setState({});
 	}
 
-	return (
-		<div className={'navdrawer ' + (props.isShown ? 'show' : '') }>
-			<div className="backdrop" onClick={() => onBackdropClick(!props.isShown)}></div>
-			<div className="drawer">
-				<header>
+	toggleNavdrawer() {
+		if (this.state.showNavdrawer) {
+			this.setShowNavdrawer(false);
+		} else {
+			this.setShowNavdrawer(true);
+		}
+	}
 
-				</header>
-				<main></main>
+	setShowNavdrawer(value) {
+		this.setState({
+			...this.state,
+			showNavdrawer: value
+		});
+	}
+
+	render() {
+		return (
+			<div>
+				<Navbar iconLeft={ICONS.Menu}
+				        onClickIconLeft={() => this.toggleNavdrawer()}
+				        title={this.props.title}></Navbar>
+				<div className={'navdrawer ' + (this.state.showNavdrawer ? 'show' : '') }>
+					<div className="backdrop" onClick={() => this.setShowNavdrawer(!this.state.showNavdrawer)}></div>
+					<div className="drawer">
+						<header>
+
+						</header>
+						<main></main>
+					</div>
+				</div>
 			</div>
-		</div>
-	);
-}
-
-export function toggleNavdrawer(instance) {
-	if (instance.state.showNavdrawer) {
-		instance.setState({ ...instance.state, showNavdrawer: false });
-	} else {
-		instance.setState({ ...instance.state, showNavdrawer: true });
+		);
 	}
-}
-
-function updateStateForBackdrop(instance, value) {
-	instance.setState({
-		...instance.state,
-		showNavdrawer: value
-	});
-}
-
-export function defaultProps(instance) {
-	return {
-		isShown: instance.state.showNavdrawer,
-		onClickBackdrop: (value) => updateStateForBackdrop(instance, value)
-	};
 }

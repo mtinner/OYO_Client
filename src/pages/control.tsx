@@ -1,11 +1,10 @@
 import Component from 'inferno-component';
-import { ICONS, Navbar } from '../components/Navbar';
 import { EndpointService } from '../services/EndpointService';
 import { IIO, ioSort } from '../common/IIO';
 import { List } from '../components/List';
 import { SwitchListItem } from '../components/SwitchListItem';
 import { constants } from '../common/constants';
-import { defaultProps, Navdrawer, toggleNavdrawer } from '../components/Navdrawer';
+import { Navdrawer } from '../components/Navdrawer';
 
 export class Control extends Component<any, any> {
 
@@ -57,10 +56,7 @@ export class Control extends Component<any, any> {
 	render() {
 		return (
 			<div>
-				<Navbar iconLeft={ICONS.Menu}
-				        onClickIconLeft={() => toggleNavdrawer(this)}
-				        title="Control"></Navbar>
-				<Navdrawer {...defaultProps(this)}></Navdrawer>
+				<Navdrawer title="Control"></Navdrawer>
 				<List items={this.renderListItems()}/>
 			</div>
 		)
