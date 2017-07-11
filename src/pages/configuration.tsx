@@ -6,8 +6,9 @@ import {EndpointService} from '../services/EndpointService';
 import {IIO} from '../common/IIO';
 import {ListItem, ListItemProps} from '../components/ListItem';
 import {SwitchListItem} from '../components/SwitchListItem';
-import {ICONS, Navbar} from '../components/Navbar';
-import {navigateToOverview} from '../common/navigation';
+import { Navbar} from '../components/Navbar';
+import {navigateToConfiguration} from '../common/navigation';
+import { ICONS } from '../common/constants';
 
 export class Configuration extends Component<any, any> {
 	private endpointService = new EndpointService();
@@ -62,7 +63,7 @@ export class Configuration extends Component<any, any> {
 	render() {
 		return (
 			<div className="configuration">
-				<Navbar iconLeft={ICONS.Arrow_Left} onClickIconLeft={navigateToOverview}
+				<Navbar iconLeft={ICONS.Arrow_Left} onClickIconLeft={navigateToConfiguration}
 						title="Configuration"></Navbar>
 				<div className="list-imitate">
 					<Inputfield

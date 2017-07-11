@@ -19,6 +19,14 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
+
+    & > i {
+      padding: 0;
+      margin-right: 32px;
+    }
+    & > span {
+      flex-grow: 1;
+    }
     & > * {
       display: flex;
       justify-items: center;

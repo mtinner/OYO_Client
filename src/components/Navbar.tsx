@@ -1,14 +1,10 @@
 import Component from 'inferno-component';
+import { ICONS } from '../common/constants';
 
 interface NavbarProps {
 	title: string;
 	iconLeft: ICONS;
 	onClickIconLeft: () => {};
-}
-
-export enum ICONS {
-	Arrow_Left = 'icon-arrow-back',
-	Menu = 'icon-menu'
 }
 
 export class Navbar extends Component<NavbarProps, any> {
