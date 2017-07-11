@@ -5,7 +5,7 @@ import { IIO, ioSort } from '../common/IIO';
 import { List } from '../components/List';
 import { SwitchListItem } from '../components/SwitchListItem';
 import { constants } from '../common/constants';
-import { Navdrawer, toggleNavdrawer, updateStateForBackdrop } from '../components/Navdrawer';
+import { defaultProps, Navdrawer, toggleNavdrawer } from '../components/Navdrawer';
 
 export class Control extends Component<any, any> {
 
@@ -13,7 +13,7 @@ export class Control extends Component<any, any> {
 	private ws: WebSocket;
 
 	componentWillMount() {
-		this.setState({ title: '', showNavdrawer: false });
+		this.setState({ title: '' });
 		// TODO activated and up
 		this.endpointService.getEndpoints({ activated: true })
 			.then((ios: [IIO]) => {
@@ -60,10 +60,10 @@ export class Control extends Component<any, any> {
 				<Navbar iconLeft={ICONS.Menu}
 				        onClickIconLeft={() => toggleNavdrawer(this)}
 				        title="Control"></Navbar>
-				<Navdrawer isShown={this.state.showNavdrawer}
-				           onClickBackdrop={(value) => updateStateForBackdrop(this, value)}></Navdrawer>
+				<Navdrawer {...defaultProps(this)}></Navdrawer>
 				<List items={this.renderListItems()}/>
 			</div>
-		);
+		)
+			;
 	}
 }

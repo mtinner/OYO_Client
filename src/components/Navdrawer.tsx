@@ -29,9 +29,16 @@ export function toggleNavdrawer(instance) {
 	}
 }
 
-export function updateStateForBackdrop(instance, value) {
+function updateStateForBackdrop(instance, value) {
 	instance.setState({
 		...instance.state,
 		showNavdrawer: value
 	});
+}
+
+export function defaultProps(instance) {
+	return {
+		isShown: instance.state.showNavdrawer,
+		onClickBackdrop: (value) => updateStateForBackdrop(instance, value)
+	};
 }
