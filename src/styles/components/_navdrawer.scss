@@ -40,7 +40,7 @@ $transitionspeed: 0.6s;
     min-height: 100vh;
     position: absolute;
     z-index: 100;
-    background-color: #91C46C;
+    background-color: white;
     top: 0;
     transition: left $transitionspeed;
     left: -$drawerwidth;
