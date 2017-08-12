@@ -1,5 +1,5 @@
 export abstract class BaseService {
-	protected readonly baseApi = '/api/';
+	protected readonly baseApi = 'http://192.168.178.44:8610/api/';
 
 	toJson<T>(response: Response): Promise<T> {
 		return Promise.resolve(response.json());
@@ -13,6 +13,16 @@ export abstract class BaseService {
 	put<T>(api, body) {
 		return fetch(api, {
 			method: 'PUT',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-type': 'application/json'
+			}
+		}).then(res => this.toJson<T>(res));
+	}
+
+	post<T>(api, body) {
+		return fetch(api, {
+			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
 				'Content-type': 'application/json'

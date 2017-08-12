@@ -9,4 +9,8 @@ export class EndpointService extends BaseService {
 	updateEndpoint(io: { id: string, [propName: string]: any }): Promise<IIO> {
 		return this.put<IIO>(`${this.baseApi}endpoints/${io.id}`, io);
 	}
+
+	switchEndpoint(io: { id: string, [propName: string]: any }): Promise<IIO> {
+		return this.post<IIO>(`${this.baseApi}endpoints/${io.id}/switch`, io);
+	}
 }
