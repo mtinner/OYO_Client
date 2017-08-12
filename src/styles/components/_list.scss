@@ -20,13 +20,6 @@
     justify-content: space-between;
     position: relative;
 
-    & > i {
-      padding: 0;
-      margin-right: 32px;
-    }
-    & > span {
-      flex-grow: 1;
-    }
     & > * {
       display: flex;
       justify-items: center;
@@ -39,6 +32,20 @@
   }
   &:not(:last-of-type) {
     border-bottom: 0.5px solid $grey;
+  }
+
+  &--navdrawer {
+    & li {
+      height: 48px;
+      & > i {
+        padding: 0;
+        margin-right: 32px;
+        color: $grey-dark;
+      }
+      & > span {
+        flex-grow: 1;
+      }
+    }
   }
 }
 

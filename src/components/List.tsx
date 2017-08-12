@@ -1,5 +1,5 @@
 import Component from 'inferno-component';
-import {ListItemProps} from './ListItem';
+import { ListItemProps } from './ListItem';
 
 interface Props {
 	title: string;
@@ -14,7 +14,7 @@ export class List extends Component<Props, any> {
 		}
 
 		return (
-			<div className="list">
+			<div className={`list ${this.props.class || ''}`}>
 				<header>{this.props.title}</header>
 				<ul>{this.props.items}</ul>
 			</div>
